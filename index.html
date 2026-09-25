@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>CoinNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--p:#0B7A75;--a:#FFB020;--bg:#F4F8F7;--c:#fff;--t:#10201E;--m:#647573;--l:#E1EAE8;--r:#E4572E;font-family:'Poppins',system-ui,sans-serif}
+@media(prefers-color-scheme:dark){:root{--bg:#0C1817;--c:#142523;--t:#E8F2F0;--m:#8DA7A3;--l:#22403C}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--t);padding:env(safe-area-inset-top) 0 calc(70px + env(safe-area-inset-bottom))}
+main{max-width:480px;margin:auto;padding:0 14px 14px}h3{margin:20px 0 10px;font-size:16px}h2{margin:6px 0}p{margin:3px 0;color:var(--m);font-size:13px}small{color:var(--m);font-size:11px}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);max-width:480px;margin:auto;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+.chip{background:var(--c);border:1px solid var(--l);border-radius:99px;padding:5px 12px;font-weight:600;font-size:14px}
+.hero{background:var(--p);color:#fff;border-radius:24px;padding:20px}.hero p{color:#cdeeea}.hero b{font-size:40px;font-weight:600}
+.card{background:var(--c);border:1px solid var(--l);border-radius:18px;padding:14px;margin:10px 0}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+button{font:inherit;cursor:pointer;border:0;border-radius:99px;padding:9px 18px;background:var(--l);color:var(--t)}button:disabled{opacity:.45}
+.pb{background:var(--p);color:#fff;font-weight:500}.wb{background:#ffffff26;color:#fff;margin:10px 8px 0 0}.pend{background:var(--a);color:#3b2a00;border:0;font-weight:500}
+input,select{width:100%;font:inherit;color:var(--t);background:var(--c);border:1px solid var(--l);border-radius:14px;padding:11px;margin:5px 0}
+.hs{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px}.gt{flex:0 0 120px;cursor:pointer}.ic{height:120px;border-radius:24px;display:grid;place-items:center;font-size:52px}.gt b{display:block;font-size:13px;margin-top:6px}
+.li{display:flex;gap:12px;align-items:center;padding:10px 0}.li .ic{height:56px;width:56px;font-size:28px;border-radius:16px;flex:none}.li div:nth-child(2){flex:1}
+.wk{display:flex;gap:6px;margin-top:10px}.d{flex:1;text-align:center;background:var(--bg);border-radius:12px;padding:8px 0;font-size:12px}.d.on{background:var(--p);color:#fff}.d small{display:block;color:inherit;opacity:.7;font-size:9px}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--c);border-top:1px solid var(--l);display:flex;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border-radius:0;font-size:11px;color:var(--m);padding:9px 0}nav button i{display:block;font-style:normal;font-size:20px}nav button.on{color:var(--p);font-weight:600}
+#ov{position:fixed;inset:0;background:var(--bg);z-index:7;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}.bar{display:flex;justify-content:space-between;padding:14px;background:var(--c);border-bottom:1px solid var(--l)}
+#gb{flex:1;position:relative;overflow:hidden;touch-action:manipulation;display:grid;place-items:center}.art{padding:20px;font-size:15px}.art p{font-size:15px;color:var(--t)}
+.bl{position:absolute;bottom:-70px;width:56px;height:70px;border-radius:50% 50% 46% 46%;animation:up 3.2s linear forwards}@keyframes up{to{bottom:105%}}
+.tapb{width:200px;height:200px;border-radius:50%;background:var(--p);color:#fff;font-size:32px;font-weight:600}.tapb:active{transform:scale(.94)}
+#sh{position:fixed;inset:0;background:#0008;z-index:9;display:flex;align-items:flex-end}.sc{background:var(--c);width:100%;max-width:480px;margin:auto;border-radius:26px 26px 0 0;padding:24px;text-align:center}
+#ad{display:none;position:fixed;inset:0;background:#000e;color:#fff;z-index:10;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#toast{position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translate(-50%,-90px);background:var(--t);color:var(--bg);padding:10px 16px;border-radius:14px;transition:.25s;z-index:20;max-width:90%}#toast.show{transform:translate(-50%,0)}
+.neg{color:var(--r)}
+</style></head><body>
+<div id="toast"></div><div id="ad"><h2>Test Ad</h2><p>Yahan AdMob rewarded ad chalega</p><b id="adt" style="font-size:56px">15</b></div>
+<div id="ov" hidden></div><div id="sh" hidden></div><div class="top" id="top"></div><main id="m"></main><nav id="nav" hidden></nav>
+<script src="server.js"></script>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ART=[["Why saving small beats spending big","Small daily savings grow faster than most people expect. Set aside a fixed amount as soon as money arrives, and treat the rest as your spending budget."],["How to spot a fake earning app","Real apps never ask you to pay first. Be careful of any app that promises huge money for no work, or asks for your password or OTP."],["Sleep and focus","Adults do best with seven to nine hours of sleep. A steady bedtime helps memory and mood more than one long weekend lie-in."]];
+/* Naya game add karna: neeche ek object daalo + server.js ke G mein same id daalo */
+const GAMES=[
+{id:'balloon',n:'Balloon Pop',i:'🎈',c:'#FFD3D3',d:'Pop balloons in 10 seconds',r:'Up to 25 coins',run(b,add){const col=['#FFB020','#FF7A7A','#5FD3A8','#7FA7FF'];const s=setInterval(()=>{const e=document.createElement('div');e.className='bl';e.style.left=Math.random()*82+'%';e.style.background=col[Math.random()*4|0];e.onpointerdown=()=>{e.remove();add()};b.appendChild(e);setTimeout(()=>e.remove(),3300)},350);return()=>clearInterval(s)}},
+{id:'tap',n:'Tap Rush',i:'⚡',c:'#D8D3FF',d:'Tap as fast as you can',r:'Up to 30 coins',run(b,add){b.innerHTML='<button class="tapb">TAP!</button>';b.firstChild.onpointerdown=add;return()=>{}}}];
+let T=localStorage.getItem('cn_t'),S=null,tab='home',dev=localStorage.cn_dev||(localStorage.cn_dev=Math.random().toString(36).slice(2));
+function toast(m){const t=$('#toast');t.textContent=m;t.className='show';setTimeout(()=>t.className='',2600)}
+async function api(a,p){try{return await API.call(a,p,T)}catch(e){toast(e);if(/login/i.test(e)){T=null;localStorage.removeItem('cn_t');boot()}throw e}}
+async function refresh(){S=await api('me')}
+async function boot(){if(!T){$('#nav').hidden=true;$('#top').innerHTML='';$('#m').innerHTML=`<div class="hero" style="margin-top:6vh"><h2 style="font-size:30px">🪙 CoinNest</h2><p>Play games, read articles, watch ads and earn coins every day.</p></div><div class="card"><input id="n" placeholder="Your name"><input id="e" type="email" placeholder="Email"><input id="r" placeholder="Referral code (optional)"><button class="pb" style="width:100%;margin-top:8px" onclick="login()">Continue with Google (test)</button><p>Real Google login APK banne ke baad lagega.</p></div>`;return}
+try{await refresh();$('#nav').hidden=false;show(tab)}catch(e){}}
+async function login(){try{const r=await API.call('login',{name:$('#n').value,email:$('#e').value,ref:$('#r').value,dev});T=r.t;localStorage.setItem('cn_t',T);boot()}catch(e){toast(e)}}
+function show(t){tab=t;$('#nav').innerHTML=[['home','🏠','Home'],['games','🎮','Games'],['earn','💰','Earn'],['wallet','👛','Wallet']].map(x=>`<button class="${x[0]==t?'on':''}" onclick="show('${x[0]}')"><i>${x[1]}</i>${x[2]}</button>`).join('');
+$('#top').innerHTML=`<b style="font-size:18px;color:var(--p)">CoinNest</b><span class="chip">🪙 ${S.u.coins.toLocaleString()}</span>`;window.scrollTo(0,0);V[t]()}
+const pendBar=()=>S.u.pend?`<div class="card pend" onclick="sheet(${S.u.pend.c},'${esc(S.u.pend.w)}')">🎁 ${S.u.pend.c} coins are waiting. Tap to claim</div>`:'';
+const gcard=g=>`<div class="gt" onclick="play('${g.id}')"><div class="ic" style="background:${g.c}">${g.i}</div><b>${g.n}</b><small>${g.r}</small></div>`;
+const V={
+async home(){const u=S.u,td=new Date().toISOString().slice(0,10),cur=u.last===td?(u.streak-1)%7+1:u.streak%7,b=await API.call('board');
+$('#m').innerHTML=`<div class="hero"><p>Total balance</p><b>${u.coins.toLocaleString()}</b> coins<p>≈ Rs ${(u.coins/S.cfg.cpr).toFixed(2)}</p><button class="wb" onclick="show('wallet')">Withdraw</button><button class="wb" onclick="show('games')">Play games</button></div>${pendBar()}${S.cfg.notice?`<div class="card">📢 ${esc(S.cfg.notice)}</div>`:''}
+<div class="card"><div class="row"><b>Daily check-in</b><button class="pb" ${u.last===td?'disabled':''} onclick="doCI()">${u.last===td?'Claimed':'Claim'}</button></div><div class="wk">${S.cfg.checkin.map((c,i)=>`<div class="d ${i<cur?'on':''}">${i<cur?'✓':'+'+c}<small>Day ${i+1}</small></div>`).join('')}</div></div>
+<h3>Popular games</h3><div class="hs">${GAMES.map(gcard).join('')}</div>
+<div class="card"><b>Invite friends</b><p>Both of you get ${S.cfg.ref} coins. Friends joined: ${u.refs}</p><div class="row" style="margin-top:8px"><span class="chip">${u.code}</span><button onclick="navigator.clipboard&&navigator.clipboard.writeText('${u.code}');toast('Code copied')">Copy</button></div></div>
+<h3>Leaderboard</h3><div class="card">${b.map((x,i)=>`<div class="row" style="padding:5px 0"><span>${['🥇','🥈','🥉'][i]||i+1+'.'} ${esc(x.n)}</span><b>${x.c}</b></div>`).join('')||'<p>No players yet</p>'}</div><button onclick="T=null;localStorage.removeItem('cn_t');boot()">Log out</button>`},
+games(){$('#m').innerHTML=`<h3>Games</h3><p>Plays left today: ${S.cfg.plays-(S.d.pl||0)}. Game ke baad ad dekh kar coins claim karo.</p>${pendBar()}<div class="card">${GAMES.map(g=>`<div class="li"><div class="ic" style="background:${g.c}">${g.i}</div><div><b>${g.n}</b><p>${g.d}</p><small>${g.r}</small></div><button class="pb" onclick="play('${g.id}')">Play</button></div>`).join('')}<div class="li"><div class="ic" style="background:var(--l)">🎲</div><div><b>More games soon</b><p>New games jaldi aa rahe hain</p></div></div></div>`},
+earn(){const c=S.cfg,d=S.d;$('#m').innerHTML=`<h3>Earn coins</h3>${pendBar()}<div class="card"><div class="li"><div class="ic" style="background:#FFE8B8">📺</div><div><b>Watch an ad</b><p>+${c.adCoins} coins · ${d.ad||0}/${c.adDaily} today</p></div><button class="pb" onclick="doAd()">Watch</button></div>
+${ART.map((a,i)=>{const dn=(d.art||[]).includes(i);return`<div class="li"><div class="ic" style="background:#CDEBE6">📰</div><div><b>${a[0]}</b><p>+${c.artCoins} coins · ${c.artSecs}s read</p></div><button class="pb" ${dn?'disabled':''} onclick="read(${i})">${dn?'Done':'Read'}</button></div>`}).join('')}</div>
+<h3>Promo code</h3><div class="card row"><input id="pc" placeholder="Enter code" style="margin:0"><button class="pb" onclick="doPromo()">Apply</button></div>`},
+async wallet(){const w=await api('mywd'),c=S.cfg;$('#m').innerHTML=`<div class="hero"><p>Available</p><b>${S.u.coins.toLocaleString()}</b> coins<p>≈ Rs ${(S.u.coins/c.cpr).toFixed(2)}</p></div><div class="card"><b>Withdraw</b><p>Minimum Rs ${c.minRs} · Rs 1 = ${c.cpr} coins</p><input id="rs" type="number" placeholder="Amount in Rs"><select id="mt"><option>JazzCash</option><option>EasyPaisa</option><option>Bank</option></select><input id="ac" placeholder="Account number"><button class="pb" style="width:100%;margin-top:6px" onclick="doWd()">Request withdraw</button></div>
+<h3>Requests</h3>${w.map(x=>`<div class="card row"><span>Rs ${x.rs} · ${x.method}</span><b class="${x.st=='rejected'?'neg':''}">${x.st}</b></div>`).join('')||'<p>No requests yet</p>'}<h3>History</h3><div class="card">${S.u.log.map(x=>`<div class="row" style="padding:4px 0"><span>${esc(x.w)}</span><b class="${x.n<0?'neg':''}">${x.n>0?'+':''}${x.n}</b></div>`).join('')||'<p>Nothing yet</p>'}</div>`}};
+const done=async m=>{await refresh();toast(m);show(tab)};
+async function doCI(){const r=await api('checkin');done('+'+r.c+' coins')}
+async function doPromo(){const r=await api('promo',{code:$('#pc').value});done('+'+r.c+' coins')}
+async function doWd(){await api('wd',{rs:$('#rs').value,method:$('#mt').value,acct:$('#ac').value});done('Request sent')}
+function showAd(){return new Promise(r=>{if(window.Android&&Android.showRewarded){window.onAdDone=r;Android.showRewarded();return}const o=$('#ad');o.style.display='flex';let s=S.cfg.adSecs;$('#adt').textContent=s;const i=setInterval(()=>{$('#adt').textContent=--s;if(s<=0){clearInterval(i);o.style.display='none';r()}},1000)})}
+function sheet(c,w){$('#sh').innerHTML=`<div class="sc"><div style="font-size:54px">🪙</div><h2>+${c} coins</h2><p>${esc(w)} reward is ready. Watch a short ad to claim it.</p><button class="pb" style="width:100%;margin-top:14px" onclick="doAd()">Watch ad & claim</button><button style="width:100%;margin-top:8px" onclick="$('#sh').hidden=true">Later</button></div>`;$('#sh').hidden=false}
+async function doAd(){$('#sh').hidden=true;try{await api('ads');await showAd();const r=await api('adc');done('+'+r.c+' coins added 🎉')}catch(e){refresh().then(()=>show(tab))}}
+async function play(id){const g=GAMES.find(x=>x.id==id);await api('gs',{g:id});let n=0,left=10;const o=$('#ov');o.hidden=false;o.innerHTML=`<div class="bar"><b>${g.i} ${g.n}</b><b id="gt"></b></div><div id="gb"></div>`;const up=()=>$('#gt').textContent=`⏱ ${left}s · ⭐ ${n}`;up();const stop=g.run($('#gb'),()=>{n++;up()});
+const iv=setInterval(async()=>{left--;up();if(left>0)return;clearInterval(iv);stop();o.hidden=true;try{const r=await api('ge',{pops:n});await refresh();r.c?sheet(r.c,g.n):toast('No coins this time. Try again!');show(tab)}catch(e){}},1000)}
+async function read(i){await api('as',{id:i});let s=S.cfg.artSecs;const o=$('#ov');o.hidden=false;o.innerHTML=`<div class="bar"><b>Article</b><button onclick="$('#ov').hidden=true">✕</button></div><div class="art"><h2>${ART[i][0]}</h2><p>${ART[i][1]}</p><p id="rt">Keep reading… ${s}s</p><button class="pb" id="rb" disabled>Continue</button></div>`;
+const t=setInterval(()=>{s--;const e=$('#rt');if(!e||o.hidden){clearInterval(t);return}if(s<=0){clearInterval(t);e.textContent='Done!';$('#rb').disabled=false}else e.textContent='Keep reading… '+s+'s'},1000);
+$('#rb').onclick=async()=>{o.hidden=true;try{const r=await api('ac');await refresh();sheet(r.c,'Article');show(tab)}catch(e){}}}
+boot();
+</script></body></html>
